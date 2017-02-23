@@ -14,18 +14,12 @@
 
 <body>
     <h1>Pagina</h1>
-    <!-- <div id="content"></div>
-    <form id="file">
-        <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" placeholder="algo">
-        </div>
-        <button id="submit" type="submit">Go</button>
-    </form> -->
 
     <div id="content" class='main'>
     <form id="file">
       <div id="mybutton">
+				<input type="text" class="form-control" id="desc" placeholder="Description">
+				<br>
         <input type="file" id="myfile">
         <br>
         <button id="submitBtn" type="submit">Submit</button>
@@ -42,35 +36,35 @@
     <script>
       var progressBar = document.getElementById("progress"),
       picUpload = new XMLHttpRequest();
-
-      var xmlhttp = new XMLHttpRequest();
-        var url = "http://45.55.77.201/file";
-        var post = function (data) {
-            var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
-            xmlhttp.open("POST", url, true);
-            xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");            
-            xmlhttp.send(JSON.stringify(data));
-            xmlhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    // Clear list
-                    var elem = document.getElementById('quotes');
-                    elem.remove();
-                    // Refresh
-                    get();
-                }
-            };
-        }
+			var form = document.getElementById('file');
 
 
+			var post = function (data) {
+				picUpload.open("POST", "http://44.55.77.201/file", true);
+				picUpload.send(data);
+				picUpload.onreadystatechange = function () {
+					if (this.readyState == 4 && this.status == 200) {
+						alert("exito");
+					}
+				};
+			}
 
-
-      var form = document.getElementById('file');
-      picUpload.open("POST", "http://44.55.77.201/file", true);
-      picUpload.send(new FormData(form));
+			
 
       form.onsubmit = function(evt) {
-        alert("subien2");
-        
+        alert("subien3");
+        evt.preventDefault();
+            var desc = document.getElementById('desc');
+            var file = document.getElementById('myfile');
+						var obj = new FormData(form);
+						obj.append("desc",desc.value);
+						obj.append("file",file.files[0]);
+            obj.file = file.files;
+            // Send data
+            post(obj);
+            // Reset form
+            desc.value = '';
+            file.value = '';
       };
         //alert("subien2");
         picUpload.upload.onprogress = function (e) {
@@ -111,9 +105,6 @@
 
   // oReq.send(oData);
   // ev.preventDefault();
-
-      
-  }
     </script>
 </body>
 
