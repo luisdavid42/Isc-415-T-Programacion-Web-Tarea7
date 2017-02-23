@@ -1,0 +1,120 @@
+<html>
+
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+
+    <style>
+        .main {
+            padding-left: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Pagina</h1>
+    <!-- <div id="content"></div>
+    <form id="file">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="algo">
+        </div>
+        <button id="submit" type="submit">Go</button>
+    </form> -->
+
+    <div id="content" class='main'>
+    <form id="file">
+      <div id="mybutton">
+        <input type="file" id="myfile">
+        <br>
+        <button id="submitBtn" type="submit">Submit</button>
+        <br>
+        <br>
+        <progress id="progress" value="0"></progress>
+      </form> 
+    </div>
+
+
+    </div>
+
+
+    <script>
+      var progressBar = document.getElementById("progress"),
+      picUpload = new XMLHttpRequest();
+
+      var xmlhttp = new XMLHttpRequest();
+        var url = "http://45.55.77.201/file";
+        var post = function (data) {
+            var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+            xmlhttp.open("POST", url, true);
+            xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");            
+            xmlhttp.send(JSON.stringify(data));
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    // Clear list
+                    var elem = document.getElementById('quotes');
+                    elem.remove();
+                    // Refresh
+                    get();
+                }
+            };
+        }
+
+
+
+
+      var form = document.getElementById('file');
+      picUpload.open("POST", "http://44.55.77.201/file", true);
+      picUpload.send(new FormData(form));
+
+      form.onsubmit = function(evt) {
+        alert("subien2");
+        
+      };
+        //alert("subien2");
+        picUpload.upload.onprogress = function (e) {
+            if (e.lengthComputable) {
+                progressBar.max = e.total;
+                progressBar.value = e.loaded;
+            }
+        }
+        picUpload.upload.onloadstart = function (e) {
+            progressBar.value = 0;
+        }
+        picUpload.upload.onloadend = function (e) {
+            progressBar.value = e.loaded;
+        }
+        //picUpload.send(new FormData());
+
+        picUpload.upload.onprogress = function (e) {
+        if (e.lengthComputable) {
+            var ratio = Math.floor((e.loaded / e.total) * 100) + '%';
+            console.log(ratio);
+        }
+      };
+
+
+  //     oData = new FormData(form);
+
+  //     oData.append("CustomField", "This is some extra data");
+
+  //     var oReq = new XMLHttpRequest();
+  //     oReq.open("POST", "http://44.55.77.201/file", true);
+  //     oReq.onload = function(oEvent) {
+  //       if (oReq.status == 200) {
+  //         alert.log("Uploaded!");
+  //       } else {
+  //         alert("Error " + oReq.status + " occurred when trying to upload your file.<br \/>");
+  //       }
+  //     };
+
+  // oReq.send(oData);
+  // ev.preventDefault();
+
+      
+  }
+    </script>
+</body>
+
+</html>
